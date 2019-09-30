@@ -1,0 +1,113 @@
+item --> item_type (one to one) (Belongs to?)
+Air Max --> Trainers
+
+item --> season (one to many) (Belongs to?)
+Duck Boots --> Winter 
+Duck Boots --> Autumn 
+
+item --> item_images (one to many)
+Air Max --> img_1
+Air Max --> img_2
+
+item --> reservation (one to many) (Belongs to?)
+Air Max --> R1
+Air Max --> R2
+
+item_type --> item_group (one to one) (Belongs to?)
+Trainers --> Footwear
+
+item_type --> item (one to many) (through user) (Has many)
+Trainers --> Air Max
+Trainers --> Internationalist
+
+item_group --> item_type (one to many) (Has many)
+Footwear --> Trainers
+Footwear --> Boots
+
+item_group --> item (one to many) (though item_type) (Has many)
+Footwear --> Air Max
+Footwear --> Internationalist
+
+item_image --> user (one to one) (through item) (Belongs to)
+IMG_1 --> Alf
+
+user --> item (one to many) (Has many)
+Alf --> Havianas
+Alf --> Blue polo shirt
+
+user --> wardobe (one to many) (Has many)
+Alf --> W1
+Alf --> W2
+
+user --> reservation (one to many) (Has many)
+Alf --> R1
+Alf --> R2
+
+user --> item_image (one to many) (through item) (Has many)
+Alf --> IMG_1
+Alf --> IMG_2
+
+user --> avatar (one to one) (Has one)
+Alf --> AV1
+
+avatar --> user (one top one) (Belongs to)
+AV1 --> Alf
+
+wardobe --> item (one to many) (Has many)
+W1 --> Blue polo shirt
+W1 --> Khaki shorts
+
+reservation --> item (one to one) (Has one)
+R1 --> Khaki shorts
+
+reservation --> user (one to one) (Has one)
+R1 --> Alf
+
+season --> item_type (one to many) (through item_group?) (Has many)
+Winter --> Boots
+Winter --> Coats
+
+season --> wardobe (one to many) (Has many)
+Winter --> W1
+Winter --> W2
+
+workplace --> user (many to many) (via wokplace_users res table) (Has many) 
+WP1 --> Alf
+
+
+OUTSTANDING RELATIONSHIPS
+
+Workplaces to Users - resolution table? : DONE
+
+An item can be cloned to create a user specific version.
+2 users may have Air Max but want to create a unique item for themselves.
+These 2 items need to be linked to allow resevations to display relevant clashes.
+
+If a user clones an item, they need to decide whether to display the image associated with the 
+original item(s) or, add their own.
+
+Multiple users may add 'khaki shorts'. A user needs to select which images are relevant to their 
+own item.
+
+
+When adding a new item, users need to set the relevant group, then type to see existing items.
+From here, they can decide whether to clone an item (company T Shirt good example), or load their 
+own, new item. The option to link to potential clashes then needs to be offered.
+ - User 1's Khaki shorts are a clash of User 2's.
+
+ Should User 2 be notified of this potential clash?
+
+ Are reservations really relevant? It's more about possible clashes. This negates the idea 
+ of paying a forfiet if you don't "dibbs" an item then duplicate the selection.
+
+ Mission
+ -------
+ To provide a easily searchable wardrobe to keep your style fresh by letting you know what you've worn and when.
+
+ Tie Ins
+ -------
+ Weather - what does today look like, what should you wear?
+ Locations - where are you going, what should you wear? - Dress code
+ Social - Share your outfit
+ Retail - What should you buy based in your style - Thread?
+ Forfeits - ? e.g. Retail: add credit to a coffee app?
