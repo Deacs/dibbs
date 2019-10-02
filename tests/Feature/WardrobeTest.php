@@ -57,4 +57,24 @@ class WardrobeTest extends TestCase
 
         $response->assertStatus(302);
     }
+
+    /**
+     * @test
+     */
+    public function wardrobe_get_add_item_path_redirects_for_anon() {
+
+        $response = $this->post('wardrobe/item/add');
+
+        $response->assertStatus(302);
+    }
+
+    /**
+     * @test
+     */
+    public function wardrobe_post_delete_item_path_redirects_for_anon() {
+
+        $response = $this->post('wardrobe/item/delete/1');
+
+        $response->assertStatus(302);
+    }
 }

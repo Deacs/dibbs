@@ -14,7 +14,6 @@ class WardrobeController extends Controller
     public function index()
     {
         return view('wardrobe.index');
-        echo 'Wardrobe Index';
     }
 
     /**
@@ -35,7 +34,7 @@ class WardrobeController extends Controller
      */
     public function store(Request $request)
     {
-        echo 'Storing new item';
+        echo 'Storing new wardrobe';
     }
 
     /**
@@ -80,6 +79,28 @@ class WardrobeController extends Controller
      */
     public function destroy($id)
     {
-        echo 'Remove Wardrobe item';
+        echo 'Remove Wardrobe';
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addItem($id)
+    {
+        echo 'Remove Item to Wardrobe';
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function removeItem($id)
+    {
+        echo 'Remove Item From Wardrobe';
     }
 }

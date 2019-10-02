@@ -22,17 +22,21 @@ Route::get('wardrobe', 'WardrobeController@index')->name('wardrobes')->middlewar
 
 Route::get('wardrobe/{id}', 'WardrobeController@show')->name('get_wardrobe')->middleware('auth');
 
-Route::get('wardrobe/add', 'WardrobeController@create')->name('add_wardrobe_item')->middleware('auth');
+Route::get('wardrobe/add', 'WardrobeController@create')->name('add_new_wardrobe')->middleware('auth');
 
-Route::post('wardrobe/add', 'WardrobeController@store')->name('add_to_wardrobe')->middleware('auth');
+Route::post('wardrobe/add', 'WardrobeController@store')->name('store_new_wardrobe')->middleware('auth');
 
-Route::post('wardrobe/delete/{id}', 'WardrobeController@delete')->name('delete_from_wardrobe')->middleware('auth');
+Route::post('wardrobe/delete/{id}', 'WardrobeController@delete')->name('delete_wardrobe')->middleware('auth');
+
+Route::post('wardrobe/item/add', 'WardrobeController@addItem')->name('add_item_to_wardrobe')->middleware('auth');
+
+Route::post('wardrobe/item/delete/{id}', 'WardrobeController@removeItem')->name('remove_item_from_wardrobe')->middleware('auth');
+
+Route::get('wardrobe/history', 'WardrobeHistoryController@index')->name('view_wardobe_history')->middleware('auth');
 
 Route::get('reservations', 'WardrobeReservationController@index')->name('view_reservations')->middleware('auth');
 
 Route::get('reservations/{id}', 'WardrobeReservationController@show')->name('get_reservation')->middleware('auth');
-
-Route::get('wardrobe/history', 'WardrobeHistoryController@index')->name('view_wardobe_history')->middleware('auth');
 
 // --------- TEST routes -------------
 
