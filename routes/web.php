@@ -18,13 +18,15 @@ Route::get('/', 'MainController@index');
 
 Route::get('dashboard', 'DashboardController@index')->name('dashboard')->middleware('auth');
 
-Route::get('wardrobe', 'WardrobeController@index')->name('wardrobe')->middleware('auth');
+Route::get('wardrobe', 'WardrobeController@index')->name('wardrobes')->middleware('auth');
+
+Route::get('wardrobe/{id}', 'WardrobeController@show')->name('get_wardrobe')->middleware('auth');
 
 Route::get('wardrobe/add', 'WardrobeController@create')->name('add_wardrobe_item')->middleware('auth');
 
 Route::post('wardrobe/add', 'WardrobeController@store')->name('add_to_wardrobe')->middleware('auth');
 
-Route::post('wardrobe/delete', 'WardrobeController@delete')->name('delete_from_wardrobe')->middleware('auth');
+Route::post('wardrobe/delete/{id}', 'WardrobeController@delete')->name('delete_from_wardrobe')->middleware('auth');
 
 Route::get('reservations', 'WardrobeReservationController@index')->name('view_reservations')->middleware('auth');
 

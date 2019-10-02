@@ -16,5 +16,14 @@ class ReservationTest extends TestCase
 
         $response->assertStatus(302);
     }
+
+     /**
+     * @test
+     */
+    public function reservations_get_item_path_redirects_for_anon() {
+        $response = $this->get('reservations/1');
+
+        $response->assertStatus(302);
+    }
 }
 
