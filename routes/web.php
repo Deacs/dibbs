@@ -16,23 +16,21 @@ Auth::routes();
 
 Route::get('/', 'MainController@index');
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('dashboard', 'DashboardController@index')->name('dashboard')->middleware('auth');
 
-Route::get('dashboard', 'DashboardController@index');
+Route::get('wardrobe', 'WardrobeController@index')->name('wardrobe')->middleware('auth');
 
-Route::get('wardrobe', 'WardrobeController@index');
+Route::get('wardrobe/add', 'WardrobeController@create')->name('add_wardrobe_item')->middleware('auth');
 
-Route::get('wardrobe/add', 'WardrobeController@create');
+Route::post('wardrobe/add', 'WardrobeController@store')->name('add_to_wardrobe')->middleware('auth');
 
-Route::post('wardrobe/add', 'WardrobeController@store');
+Route::post('wardrobe/delete', 'WardrobeController@delete')->name('delete_from_wardrobe')->middleware('auth');
 
-Route::post('wardrobe/delete', 'WardrobeController@delete');
+Route::get('reservations', 'WardrobeReservationController@index')->name('view_reservations')->middleware('auth');
 
-Route::get('reservations', 'WardrobeReservationController@index');
+Route::get('reservations/{id}', 'WardrobeReservationController@show')->name('get_reservation')->middleware('auth');
 
-Route::get('reservations/{id}', 'WardrobeReservationController@show');
-
-Route::get('wardrobe/history', 'WardrobeHistoryController@index');
+Route::get('wardrobe/history', 'WardrobeHistoryController@index')->name('view_wardobe_history')->middleware('auth');
 
 // --------- TEST routes -------------
 

@@ -6,15 +6,14 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ReservationTest extends TestCase
+class DashboardTest extends TestCase
 {
-    /**
+   /**
      * @test
      */
-    public function reservations_home_path_redirects_for_anon() {
-        $response = $this->get('reservations');
+    public function dashboard_home_path_redirects_for_anon() {
+        $response = $this->get('dashboard');
 
         $response->assertStatus(302);
     }
 }
-

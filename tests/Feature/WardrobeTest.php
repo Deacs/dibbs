@@ -11,19 +11,10 @@ class WardrobeTest extends TestCase
     /**
      * @test
      */
-    public function correct_wardrobe_root_path() {
+    public function wardrobe_home_path_redirects_for_anon() {
 
-        $response = $this->get('/wardrobe');
+        $response = $this->get('wardrobe');
 
-        $response->assertStatus(200);
-    }
-
-    /**
-     * @test
-     */
-    public function correct_wardrobe_history_path() {
-        $response = $this->get('/wardrobe/history');
-
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 }
