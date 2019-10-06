@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     /**
-     * Display a the home for the dashboard.
+     * Display  the home for the dashboard.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('dashboard.index');
+        $user = \Auth::user();
+        return view('dashboard.index')->with('user', $user);
     }
 }

@@ -17,31 +17,31 @@ class UsersTableSeeder extends Seeder
         $users = [
             [
                 'name' => 'Alf',
-                'email' => 'alf@domain.com',
+                'email' => 'alf@email.com',
                 'password' => Hash::make('alf_pass'),
                 'gender_id' => 2,
             ],
             [
                 'name' => 'Alice',
-                'email' => 'alice@domain.com',
+                'email' => 'alice@email.com',
                 'password' => Hash::make('alice_pass'),
                 'gender_id' => 1,
             ],
             [
                 'name' => 'Bob',
-                'email' => 'bob@domain.com',
+                'email' => 'bob@email.com',
                 'password' => Hash::make('bob_pass'),
                 'gender_id' => 3
             ],
             [
                 'name' => 'Kate',
-                'email' => 'kate@domain.com',
+                'email' => 'kate@email.com',
                 'password' => Hash::make('kate_pass'),
                 'gender_id' => 1,
             ],
             [
                 'name' => 'Luke',
-                'email' => 'luke@domain.com',
+                'email' => 'luke@email.com',
                 'password' => Hash::make('luke_pass'),
                 'gender_id' => 2,
             ],
