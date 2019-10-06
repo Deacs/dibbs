@@ -24,7 +24,7 @@ class UserController extends Controller
 
         $user->save();
 
-        $request->session()->flash('status',__('Profile uccessfully updated!'));
+        $request->session()->flash('status',__('Profile successfully updated!'));
         return redirect('/dashboard');
     }
 }

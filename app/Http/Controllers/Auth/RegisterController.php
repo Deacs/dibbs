@@ -75,19 +75,4 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
-
-    /**
-     * Dirty user add through the request
-     * 
-     * @param  array  $request
-     * @return \App\User
-     */
-    protected function quickUser(Request $request)
-    {
-        return User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-    }
 }

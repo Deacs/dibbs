@@ -45,9 +45,3 @@ Route::get('reservations/{id}', 'WardrobeReservationController@show')->name('get
 // --------- TEST routes -------------
 
 Route::get('seasons', 'SeasonController@index');
-
-Route::get('user/new/{name}/{email}/{password}', 'Auth\RegisterController@quickUser');
-
-Route::get('pusher', function () {
-    return view('pusher');
-});

@@ -59,24 +59,6 @@
                 $(this).removeClass('active');
             });
 
-            // console.log($tab.siblings())
-
-            // console.log($tab);
-
-            // $user_detail_tabs.each(function() {
-
-            //     // console.log('This: ' + $(this).attr('id'));
-            //     // console.log('Tab: ' + $tab.attr('id'));
-                
-            //     if () {
-
-            //     }
-
-            //     $(this).attr('id') === $tab.attr('id') ? $(this).addClass('active') : $(this).removeClass('active');
-            // });
-
-            // $tab.addClass('active');
-
             $user_detail_panels.each(function() {
                 $(this).attr('id') === $tab.data('panel') ? $(this).show() : $(this).hide();
             });
