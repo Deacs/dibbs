@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SeasonsTableSeeder::class);
         $this->call(ItemsTableSeeder::class);
         $this->call(GendersTableSeeder::class);
+        $this->call(AvatarsTableSeeder::class);
     }
 }
