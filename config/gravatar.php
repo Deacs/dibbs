@@ -12,12 +12,12 @@ return array(
 	// (string) monsterid: a generated 'monster' with different colors, faces, etc.
 	// (string) wavatar: generated faces with differing features and backgrounds.
 	// (string) retro: awesome generated, 8-bit arcade-style pixelated faces.
-	'default' => 'identicon',
+	'default' => 'retro',
 
 	// --- Set the type of avatars we allow to show
 	// - g: suitable for display on all websites with any audience type.
 	// - pg: may contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence.
 	// - r: may contain such things as harsh profanity, intense violence, nudity, or hard drug use.
 	// - x: may contain hardcore sexual imagery or extremely disturbing violence.
-	'maxRating' => 'g'
+	'maxRating' => 'x'
 );

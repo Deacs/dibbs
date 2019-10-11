@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->integer('gender_id')->default(3);
             $table->string('email')->unique();
+            $table->enum('avatar_type', ['custom', 'gravatar'])->default('gravatar');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

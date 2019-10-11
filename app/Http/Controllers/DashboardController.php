@@ -11,8 +11,7 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $user = \Auth::user();
         return view('dashboard.index')->with('user', $user);
     }

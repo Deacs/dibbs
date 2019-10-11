@@ -14,7 +14,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
         // TODO
-        // Check that teh authed user ID matches the value in the request
+        // Check that the authed user ID matches the value in the request
         // Throw an exception if this is not the case
         $user = \Auth::user();
 

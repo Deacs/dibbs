@@ -8,7 +8,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col" style="background:rosybrown;">
+        <div class="col">
             @include('dashboard.avatar')
         </div>
         <div class="col-9">
