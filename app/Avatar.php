@@ -37,8 +37,8 @@ class Avatar extends Model
     }
 
     /**
-     * If a Gravatar is being used, is it randomly generated, 
-     * or has this user uploaded one to the service
+     * If a Gravatar is being used, is it system generated, 
+     * or has this user uploaded one to the service?
      */
     public function isGeneratedGravatar() {
 
