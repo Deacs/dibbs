@@ -32,6 +32,17 @@ class Avatar extends Model
      * we will return a generated Gravatar image for them
      */
     public function getPath($size = 200) {
-        echo \Gravatar::src($this->user->email, $size);
+
+        return ($this->type == 'custom' && !is_null($this->path)) ? $this->path : \Gravatar::src($this->user->email, $size);
+    }
+
+    /**
+     * If a Gravatar is being used, is it randomly generated, 
+     * or has this user uploaded one to the service
+     */
+    public function isGeneratedGravatar() {
+
+        // Returns true even for nonsense emails - ?
+        return \Gravatar::exists($this->user->email);
     }
 }

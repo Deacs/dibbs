@@ -22,6 +22,8 @@ Route::post('user/update/password', 'UserController@updatePassword')->name('upda
 
 Route::post('user/update', 'UserController@update')->name('update_user')->middleware('auth');
 
+Route::get('user/avatar/update', 'AvatarController@edit')->name('update_avatar')->middleware('auth');
+
 Route::get('wardrobe', 'WardrobeController@index')->name('wardrobes')->middleware('auth');
 
 Route::get('wardrobe/{id}', 'WardrobeController@show')->name('get_wardrobe')->middleware('auth');
@@ -41,7 +43,3 @@ Route::get('wardrobe/history', 'WardrobeHistoryController@index')->name('view_wa
 Route::get('reservations', 'WardrobeReservationController@index')->name('view_reservations')->middleware('auth');
 
 Route::get('reservations/{id}', 'WardrobeReservationController@show')->name('get_reservation')->middleware('auth');
-
-// --------- TEST routes -------------
-
-Route::get('seasons', 'SeasonController@index');
