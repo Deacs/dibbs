@@ -38,21 +38,10 @@ class DashboardTest extends DuskTestCase
      */
     public function dashboard_displays_correct_tabs() {
         
-        $user = factory(User::class)->create([
-            'email'     => 'jo@email.com',
-            'name'      => 'Jo',
-            'password'  => bcrypt('jo_pass'),
+        $user   = factory(User::class)->create();
+        $avatar = factory(Avatar::class)->create([
+            'user_id' => $user->id
         ]);
-
-        $avatar = Avatar::create([
-            'user_id' => $user->id,
-        ]);
-
-        // dd($user);
-
-        // $user = User::find(1);
-
-        // dd($user);
 
         $this->browse(function($browser) use ($user) {
             $browser->loginAs($user)
