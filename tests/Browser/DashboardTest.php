@@ -75,8 +75,34 @@ class DashboardTest extends DuskTestCase
         $this->browse(function($browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/dashboard')
+                    ->on(new Dashboard)
                     ->assertDontSeeIn('li.nav-item > a.active', 'Reset Password')
                     ->assertDontSeeIn('li.nav-item > a.active', 'Your Calendar');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     */
+    public function user_details_edit_form_shows_correct_fields() {
+
+        $this->browse(function($browser) {
+            
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->assertSeeIn('div#user_details > form > div.form-group > label.fullname', 'Full Name')
+                ->assertSeeIn('div#user_details > form > div.form-group > label.nickname', 'Nickname')
+                ->assertSeeIn('div#user_details > form > div.form-group label.email', 'Email address')
+                ->assertSeeIn('div#user_details > form > div.form-group label.gender', 'Gender');
+                // ->assertSelectHasOptions('userGenderId', ['Female', 'Male', 'Non-Binary']);
         });
     }
 
@@ -95,9 +121,31 @@ class DashboardTest extends DuskTestCase
 
             $browser->loginAs($user)
                 ->visit('dashboard')
+                ->on(new Dashboard)
                 ->assertInputValue('userName', $user->name)
                 ->assertInputValue('userEmail', $user->email)
                 ->assertSelected('#userGenderId', $user->gender_id);
         });
     }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group user-details
+     */
+    // public function updating_user_details_correctly_stores_data() {
+        
+    //     $this->browse(function($browser) {
+
+    //         $user = User::find(1);
+
+    //         $browser->loginAs($user)
+    //             ->visit('dashboard')
+    //             ->clickLink('Your Details')
+    //             ->
+    //     });
+    // }
 }

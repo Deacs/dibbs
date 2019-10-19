@@ -23,11 +23,6 @@ class LoginTest extends DuskTestCase
         $avatar = factory(Avatar::class)->create([
             'user_id' => 1
         ]);
-        
-        // Session data is not reset between tests!
-        // foreach (static::$browsers as $browser) {
-        //     $browser->driver->manage()->deleteAllCookies();
-        // }
     }
 
     /**
@@ -73,7 +68,6 @@ class LoginTest extends DuskTestCase
      * 
      * @group login
      * @group auth
-     * @group broken
      */
     public function dashboard_shows_success_alert_with_correct_username_on_login() {
 
@@ -97,7 +91,6 @@ class LoginTest extends DuskTestCase
      * 
      * @group login
      * @group auth
-     * @group new
      */
     public function user_successfully_redirected_to_dashboard_on_successful_login() {
 
