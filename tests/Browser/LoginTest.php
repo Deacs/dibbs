@@ -68,6 +68,8 @@ class LoginTest extends DuskTestCase
      * 
      * @group login
      * @group auth
+     * @group flash
+     * @group notification
      */
     public function dashboard_shows_success_alert_with_correct_username_on_login() {
 

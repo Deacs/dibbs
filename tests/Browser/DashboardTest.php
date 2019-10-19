@@ -28,6 +28,7 @@ class DashboardTest extends DuskTestCase
      * 
      * @group dashboard
      * @group auth
+     * @group redirect
      */
     public function dashboard_request_for_anon_user_redirected_to_login()
     {
@@ -48,7 +49,10 @@ class DashboardTest extends DuskTestCase
         $this->browse(function($browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/dashboard')
-                    ->assertSee('Your Details');
+                    ->on(new Dashboard)
+                    ->assertSee('Your Details')
+                    ->assertSee('Reset Password')
+                    ->assertSee('Your Calendar');
         });
     }
 
@@ -63,12 +67,16 @@ class DashboardTest extends DuskTestCase
         $this->browse(function($browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/dashboard')
+                    ->on(new Dashboard)
                     ->assertSeeIn('li.nav-item > a.active', 'Your Details');
         });
     }
 
     /**
      * @test
+     * 
+     * @group dashboard
+     * @group nav
      */
     public function dashboard_shows_correct_default_inactive_tabs() {
         
@@ -78,6 +86,22 @@ class DashboardTest extends DuskTestCase
                     ->on(new Dashboard)
                     ->assertDontSeeIn('li.nav-item > a.active', 'Reset Password')
                     ->assertDontSeeIn('li.nav-item > a.active', 'Your Calendar');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group nav
+     */
+    public function dashboard_displays_correct_default_panel() {
+
+        $this->browse(function($browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('/dashboard')
+                ->on(new Dashboard)
+                ->assertVisible('#user_details');
         });
     }
 
@@ -137,8 +161,6 @@ class DashboardTest extends DuskTestCase
      * @group form
      * @group flash
      * @group notification
-     * 
-     * @group new
      */
     public function successful_update_displays_success_alert() {
 
@@ -193,4 +215,65 @@ class DashboardTest extends DuskTestCase
                 ->assertSelected('#userGenderId', $updateData['userGenderId']);
         });
     }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group nav
+     */
+    public function clicking_your_details_tab_opens_correct_panel() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->assertVisible('div#user_details');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group nav
+     */
+    public function clicking_update_password_tab_opens_correct_panel() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Reset Password')
+                ->assertVisible('div#update_password');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group nav
+     */
+    public function clicking_your_calendar_tab_opens_correct_panel() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Calendar')
+                ->assertVisible('div#calendar');
+        });
+    }
+
 }

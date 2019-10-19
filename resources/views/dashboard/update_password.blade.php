@@ -1,4 +1,4 @@
-<h4>Update your password</h4>
+<h4 class="update_password">Update your password</h4>
 
 <form action="user/update/password">
     {{ csrf_field() }}
