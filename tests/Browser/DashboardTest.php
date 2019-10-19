@@ -135,7 +135,33 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group flash
+     * @group notification
+     * 
      * @group new
+     */
+    public function successful_update_displays_success_alert() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->type('userName', 'New User Name')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-success', 'Profile successfully updated!');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
      */
     public function updating_user_details_correctly_stores_data() {
         
