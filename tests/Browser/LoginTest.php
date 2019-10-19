@@ -81,7 +81,7 @@ class LoginTest extends DuskTestCase
                 ->type('password', 'test_password')
                 ->press('Login')
                 ->waitFortext('Welcome back')
-                ->assertSeeIn('div.alert-success', 'Welcome back '.$user->name)
+                ->assertSeeIn('div.alert-success', 'Welcome back '.$user->nickname)
                 ->logout();
         });
     }

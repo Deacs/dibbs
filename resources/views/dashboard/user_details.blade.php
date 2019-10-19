@@ -14,9 +14,9 @@
     </div>
     <div class="form-group">
         <label for="userNickname" class="nickname">Nickname</label>
-        <input type="text" class="form-control" id="userNickName" name="userNickName" aria-describedby="userNicknameHelp" placeholder="Enter nickname" value="{{ $user->user_nickname }}">
+        <input type="text" class="form-control" id="userNickname" name="userNickname" aria-describedby="userNicknameHelp" placeholder="Enter nickname" value="{{ $user->nickname }}">
         <small id="userNickameHelp" class="form-text text-muted">As it will appear on your profile.</small>
-        @error('user_nickname')
+        @error('nickname')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
@@ -25,7 +25,7 @@
     <div class="form-group">
       <label for="userEmail" class="email">Email address</label>
       <input type="email" class="form-control" id="userEmail" name="userEmail" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $user->email }}">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email without your permission.</small>
       @error('email')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -40,6 +40,7 @@
             <option value="2" @if ($user->gender_id === 2) selected="selected" @endif>Male</option>
             <option value="3" @if ($user->gender_id === 3) selected="selected" @endif>Non-Binary</option>
         </select>
+        <small id="genderHelp" class="form-text text-muted">We'll try to help suggest clothes you may like.</small>
         @error('gender_id')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

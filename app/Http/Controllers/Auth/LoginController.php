@@ -39,7 +39,7 @@ class LoginController extends Controller
     }
 
     protected function authenticated(Request $request, $user) {
-        $request->session()->flash('status',__('Welcome back :name',['name' => $user->name]));
+        $request->session()->flash('status',__('Welcome back :name',['name' => $user->nickname]));
         return redirect($this->redirectTo);
     }
 }

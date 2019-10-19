@@ -13,12 +13,10 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        // TODO
-        // Check that the authed user ID matches the value in the request
-        // Throw an exception if this is not the case
         $user = \Auth::user();
 
         $user->name = $request->userName;
+        $user->nickname = $request->userNickname;
         $user->email = $request->userEmail;
         $user->gender_id = $request->userGenderId;
 

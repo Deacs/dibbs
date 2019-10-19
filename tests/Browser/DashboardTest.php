@@ -101,8 +101,8 @@ class DashboardTest extends DuskTestCase
                 ->assertSeeIn('div#user_details > form > div.form-group > label.fullname', 'Full Name')
                 ->assertSeeIn('div#user_details > form > div.form-group > label.nickname', 'Nickname')
                 ->assertSeeIn('div#user_details > form > div.form-group label.email', 'Email address')
-                ->assertSeeIn('div#user_details > form > div.form-group label.gender', 'Gender');
-                // ->assertSelectHasOptions('userGenderId', ['Female', 'Male', 'Non-Binary']);
+                ->assertSeeIn('div#user_details > form > div.form-group label.gender', 'Gender')
+                ->assertSelectHasOptions('userGenderId', ['1', '2', '3']);
         });
     }
 
@@ -123,6 +123,7 @@ class DashboardTest extends DuskTestCase
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->assertInputValue('userName', $user->name)
+                ->assertInputValue('userNickname', $user->nickname)
                 ->assertInputValue('userEmail', $user->email)
                 ->assertSelected('#userGenderId', $user->gender_id);
         });
@@ -134,18 +135,36 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
-     * @group user-details
+     * @group new
      */
-    // public function updating_user_details_correctly_stores_data() {
+    public function updating_user_details_correctly_stores_data() {
         
-    //     $this->browse(function($browser) {
+        $this->browse(function($browser) {
 
-    //         $user = User::find(1);
+            $user = User::find(1);
 
-    //         $browser->loginAs($user)
-    //             ->visit('dashboard')
-    //             ->clickLink('Your Details')
-    //             ->
-    //     });
-    // }
+            $updateData = [
+                'userName'      => 'Jack Jones',
+                'userNickname'  => 'Jackie',
+                'userEmail'     => 'jack@email.com',
+                'userGenderId'  => 3
+            ];
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->assertSee('Full Name')
+                ->type('userName', $updateData['userName'])
+                ->type('userNickname', $updateData['userNickname'])
+                ->type('userEmail', $updateData['userEmail'])
+                ->select('userGenderId', $updateData['userGenderId'])
+                ->press('Update Details')
+                ->on(new Dashboard)
+                ->assertInputValue('userName', $updateData['userName'])
+                ->assertInputValue('userNickname', $updateData['userNickname'])
+                ->assertInputValue('userEmail', $updateData['userEmail'])
+                ->assertSelected('#userGenderId', $updateData['userGenderId']);
+        });
+    }
 }
