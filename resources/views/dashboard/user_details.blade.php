@@ -3,19 +3,19 @@
 <form action="user/update" method="POST">
     {{ csrf_field() }}
     <div class="form-group">
-        <label for="userName" class="fullname">Full Name</label>
-        <input type="text" class="form-control" id="userName" name="userName" aria-describedby="userNameHelp" placeholder="Enter name" value="{{ $user->name }}">
-        <small id="userNameHelp" class="form-text text-muted">Your full name.</small>
-        @error('username')
+        <label for="name" class="fullname">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" placeholder="Enter name" value="{{ $user->name }}">
+        <small id="nameHelp" class="form-text text-muted">Your full name.</small>
+        @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
     </div>
     <div class="form-group">
-        <label for="userNickname" class="nickname">Nickname</label>
-        <input type="text" class="form-control" id="userNickname" name="userNickname" aria-describedby="userNicknameHelp" placeholder="Enter nickname" value="{{ $user->nickname }}">
-        <small id="userNickameHelp" class="form-text text-muted">As it will appear on your profile.</small>
+        <label for="nickname" class="nickname">Nickname</label>
+        <input type="text" class="form-control" id="nickname" name="nickname" aria-describedby="userNicknameHelp" placeholder="Enter nickname" value="{{ $user->nickname }}">
+        <small id="userNicknameHelp" class="form-text text-muted">As it will appear on your profile.</small>
         @error('nickname')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -23,8 +23,8 @@
         @enderror
     </div>
     <div class="form-group">
-      <label for="userEmail" class="email">Email address</label>
-      <input type="email" class="form-control" id="userEmail" name="userEmail" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $user->email }}">
+      <label for="email" class="email">Email address</label>
+      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $user->email }}">
       <small id="emailHelp" class="form-text text-muted">We'll never share your email without your permission.</small>
       @error('email')
         <span class="invalid-feedback" role="alert">
@@ -33,8 +33,8 @@
         @enderror
     </div>
     <div class="form-group">
-        <label for="userGender" class="gender">Gender</label>
-        <select class="form-control" id="userGenderId" name="userGenderId">
+        <label for="gender" class="gender">Gender</label>
+        <select class="form-control" id="genderId" name="genderId">
             <option>Please Select</option>
             <option value="1" @if ($user->gender_id === 1) selected="selected" @endif>Female</option>
             <option value="2" @if ($user->gender_id === 2) selected="selected" @endif>Male</option>

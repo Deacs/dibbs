@@ -109,117 +109,6 @@ class DashboardTest extends DuskTestCase
      * @test
      * 
      * @group dashboard
-     * @group user
-     * @group form
-     */
-    public function user_details_edit_form_shows_correct_fields() {
-
-        $this->browse(function($browser) {
-            
-            $user = User::find(1);
-
-            $browser->loginAs($user)
-                ->visit('dashboard')
-                ->on(new Dashboard)
-                ->clickLink('Your Details')
-                ->assertSeeIn('div#user_details > form > div.form-group > label.fullname', 'Full Name')
-                ->assertSeeIn('div#user_details > form > div.form-group > label.nickname', 'Nickname')
-                ->assertSeeIn('div#user_details > form > div.form-group label.email', 'Email address')
-                ->assertSeeIn('div#user_details > form > div.form-group label.gender', 'Gender')
-                ->assertSelectHasOptions('userGenderId', ['1', '2', '3']);
-        });
-    }
-
-    /**
-     * @test
-     * 
-     * @group dashboard
-     * @group user
-     * @group form
-     */
-    public function dashboard_shows_correct_user_details_to_edit() {
-
-        $this->browse(function($browser) {
-
-            $user = User::find(1);
-
-            $browser->loginAs($user)
-                ->visit('dashboard')
-                ->on(new Dashboard)
-                ->assertInputValue('userName', $user->name)
-                ->assertInputValue('userNickname', $user->nickname)
-                ->assertInputValue('userEmail', $user->email)
-                ->assertSelected('#userGenderId', $user->gender_id);
-        });
-    }
-
-    /**
-     * @test
-     * 
-     * @group dashboard
-     * @group user
-     * @group form
-     * @group flash
-     * @group notification
-     */
-    public function successful_update_displays_success_alert() {
-
-        $this->browse(function($browser) {
-
-            $user = User::find(1);
-
-            $browser->loginAs($user)
-                ->visit('dashboard')
-                ->on(new Dashboard)
-                ->clickLink('Your Details')
-                ->type('userName', 'New User Name')
-                ->press('Update Details')
-                ->assertSeeIn('div.alert-success', 'Profile successfully updated!');
-        });
-    }
-
-    /**
-     * @test
-     * 
-     * @group dashboard
-     * @group user
-     * @group form
-     */
-    public function updating_user_details_correctly_stores_data() {
-        
-        $this->browse(function($browser) {
-
-            $user = User::find(1);
-
-            $updateData = [
-                'userName'      => 'Jack Jones',
-                'userNickname'  => 'Jackie',
-                'userEmail'     => 'jack@email.com',
-                'userGenderId'  => 3
-            ];
-
-            $browser->loginAs($user)
-                ->visit('dashboard')
-                ->on(new Dashboard)
-                ->clickLink('Your Details')
-                ->assertSee('Full Name')
-                ->type('userName', $updateData['userName'])
-                ->type('userNickname', $updateData['userNickname'])
-                ->type('userEmail', $updateData['userEmail'])
-                ->select('userGenderId', $updateData['userGenderId'])
-                ->press('Update Details')
-                ->on(new Dashboard)
-                ->assertInputValue('userName', $updateData['userName'])
-                ->assertInputValue('userNickname', $updateData['userNickname'])
-                ->assertInputValue('userEmail', $updateData['userEmail'])
-                ->assertSelected('#userGenderId', $updateData['userGenderId']);
-        });
-    }
-
-    /**
-     * @test
-     * 
-     * @group dashboard
      * @group nav
      */
     public function clicking_your_details_tab_opens_correct_panel() {
@@ -273,6 +162,146 @@ class DashboardTest extends DuskTestCase
                 ->on(new Dashboard)
                 ->clickLink('Your Calendar')
                 ->assertVisible('div#calendar');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     */
+    public function user_details_edit_form_shows_correct_fields() {
+
+        $this->browse(function($browser) {
+            
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->assertSeeIn('div#user_details > form > div.form-group > label.fullname', 'Full Name')
+                ->assertSeeIn('div#user_details > form > div.form-group > label.nickname', 'Nickname')
+                ->assertSeeIn('div#user_details > form > div.form-group label.email', 'Email address')
+                ->assertSeeIn('div#user_details > form > div.form-group label.gender', 'Gender')
+                ->assertSelectHasOptions('genderId', ['1', '2', '3']);
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     */
+    public function dashboard_shows_correct_user_details_to_edit() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->assertInputValue('name', $user->name)
+                ->assertInputValue('nickname', $user->nickname)
+                ->assertInputValue('email', $user->email)
+                ->assertSelected('#genderId', $user->gender_id);
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group flash
+     * @group notification
+     * @group success
+     */
+    public function successful_update_displays_success_alert() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->type('name', 'New User Name')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-success', 'Details successfully updated!');
+        });
+    }
+
+     /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function unsuccessful_update_due_to_missing_fullname_displays_error_alert() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->type('name', '')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-danger', 'Full name cannot be left empty');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * 
+     * 
+     */
+    public function updating_user_details_correctly_displays_updated_data() {
+        
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $updateData = [
+                'name'      => 'Jack Jones',
+                'nickname'  => 'Jackie',
+                'email'     => 'jack@email.com',
+                'genderId'  => 3
+            ];
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->assertSee('Full Name')
+                ->type('name', $updateData['name'])
+                ->type('nickname', $updateData['nickname'])
+                ->type('email', $updateData['email'])
+                ->select('genderId', $updateData['genderId'])
+                ->press('Update Details')
+                ->on(new Dashboard)
+                ->assertInputValue('name', $updateData['name'])
+                ->assertInputValue('nickname', $updateData['nickname'])
+                ->assertInputValue('email', $updateData['email'])
+                ->assertSelected('#genderId', $updateData['genderId']);
         });
     }
 
