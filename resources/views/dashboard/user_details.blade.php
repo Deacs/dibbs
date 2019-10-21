@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
       <label for="email" class="email">Email address</label>
-      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $user->email }}">
+      <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" value="{{ $user->email }}">
       <small id="emailHelp" class="form-text text-muted">We'll never share your email without your permission.</small>
       @error('email')
         <span class="invalid-feedback" role="alert">

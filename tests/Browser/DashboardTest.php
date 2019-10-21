@@ -239,7 +239,7 @@ class DashboardTest extends DuskTestCase
         });
     }
 
-     /**
+    /**
      * @test
      * 
      * @group dashboard
@@ -249,7 +249,7 @@ class DashboardTest extends DuskTestCase
      * @group notification
      * @group error
      */
-    public function unsuccessful_update_due_to_missing_fullname_displays_error_alert() {
+    public function unsuccessful_update_due_to_missing_fullname_displays_correct_error_alert() {
 
         $this->browse(function($browser) {
 
@@ -271,8 +271,87 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function unsuccessful_update_due_to_missing_nickname_displays_correct_error_alert() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->type('nickname', '')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-danger', 'Nickname cannot be left empty');
+        });
+    }
+
+    /**
+     * @test
      * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function unsuccessful_update_due_to_missing_email_displays_correct_error_alert() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->type('email', '')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-danger', 'Email address cannot be left empty');
+        });
+    }
+
+    /**
+     * @test
      * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function unsuccessful_update_due_to_malformed_email_displays_correct_error_alert() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->type('email', 'bademailatdomian.com')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-danger', 'Please supply a valid email address');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group flash
+     * @group notification
+     * @group success
      */
     public function updating_user_details_correctly_displays_updated_data() {
         
