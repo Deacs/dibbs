@@ -13,6 +13,14 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class RegisterTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
+    var $user_data = [
+        'name'      => 'Barry Chuckle',
+        'nickname'  => 'Baz',
+        'email'     => 'baz@email.com',
+        'password'  => 'baz_pass',
+        'gender_id' => 3,
+    ];
     
     /**
      * @test
@@ -23,7 +31,7 @@ class RegisterTest extends DuskTestCase
     {
         $this->browse(function ($browser) {
             $browser->visit('register')
-                    ->on(new Register);
+                ->on(new Register);
         });
     }
 
@@ -44,6 +52,35 @@ class RegisterTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                 ->visit('/register')
                 ->on(new Dashboard);
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group register
+     * @group notification
+     * @group form
+     * @group flash
+     * @group notification
+     * @group error
+     * 
+     * @group new
+     */
+    public function unsuccessful_register_due_to_missing_fullname_displays_correct_inline_error_message() {
+
+        $this->browse(function($browser) {
+            $browser->visit('register')
+                ->on(new Register)
+                ->type('name', '')
+                ->type('nickname', $this->user_data['nickname'])
+                ->type('email', $this->user_data['email'])
+                ->select('gender_id', $this->user_data['gender_id'])
+                ->type('password', $this->user_data['password'])
+                ->type('password_confirmation', $this->user_data['password'])
+                ->press('Register')
+                ->on(new Register)
+                ->assertSeeIn('span.invalid-feedback', 'The name field is required.');
         });
     }
 }
