@@ -18,7 +18,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->nickname = $request->nickname;
         $user->email = $request->email;
-        $user->gender_id = $request->genderId;
+        $user->gender_id = $request->gender_id;
 
         $flash_msg = null;
         $flash_type = 'error';
@@ -31,7 +31,7 @@ class UserController extends Controller
             $flash_msg = 'Email address cannot be left empty';
         } elseif(!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
             $flash_msg = 'Please supply a valid email address';
-        } else if (is_null($request->genderId) || $request->genderId == 0) {
+        } else if (is_null($request->gender_id) || $request->gender_id == 0) {
             $flash_msg = 'A valid gender must be selected';
         }
 

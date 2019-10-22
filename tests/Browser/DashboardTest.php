@@ -38,6 +38,75 @@ class DashboardTest extends DuskTestCase
                     ->on(new Login);
         });
     }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group link
+     * @group avatar
+     */
+    public function user_with_automatically_generated_gravatar_sees_link_to_gravatar_site() {
+
+        $this->browse(function($browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->assertSeeLink('your own Gravatar image');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group link
+     * @group avatar
+     */
+    public function user_with_automatically_generated_gravatar_sees_link_to_create_custom_avatar() {
+
+        $this->browse(function($browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->assertSeeLink('custom avatar');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group avatar
+     * @group link
+     * @group url
+     */
+    public function gravatar_site_link_opens_correct_url() {
+
+        $this->browse(function($browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->clickLink('your own Gravatar image')
+                ->assertUrlIs('https://en.gravatar.com/');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group avatar
+     * @group link
+     * @group form
+     */
+    public function custom_avatar_link_displays_correct_form() {
+
+        $this->browse(function($browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->clickLink('custom avatar')
+                ->assertSeeIn('div#update_avatar > h4', 'Edit your avatar');
+        });
+    }
+
     
     /**
      * @test
@@ -100,7 +169,7 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
             $browser->loginAs(User::find(1))
-                ->visit('/dashboard')
+                ->visit('dashboard')
                 ->on(new Dashboard)
                 ->assertVisible('#user_details');
         });
@@ -116,9 +185,7 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Details')
@@ -136,9 +203,7 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Reset Password')
@@ -156,9 +221,7 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Calendar')
@@ -177,18 +240,32 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
             
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Details')
                 ->assertSeeIn('div#user_details > form > div.form-group > label.fullname', 'Full Name')
                 ->assertSeeIn('div#user_details > form > div.form-group > label.nickname', 'Nickname')
                 ->assertSeeIn('div#user_details > form > div.form-group label.email', 'Email address')
-                ->assertSeeIn('div#user_details > form > div.form-group label.gender', 'Gender')
-                ->assertSelectHasOptions('genderId', ['1', '2', '3']);
-        });
+                ->assertSeeIn('div#user_details > form > div.form-group label.gender_id', 'Gender');
+       });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     */
+    public function gender_iselct_in_user_details_form_has_correct_options() {
+
+        $this->browse(function($browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->assertSelectHasOptions('gender_id',['1', '2', '3']);
+        });            
     }
 
     /**
@@ -210,7 +287,7 @@ class DashboardTest extends DuskTestCase
                 ->assertInputValue('name', $user->name)
                 ->assertInputValue('nickname', $user->nickname)
                 ->assertInputValue('email', $user->email)
-                ->assertSelected('#genderId', $user->gender_id);
+                ->assertSelected('#gender_id',$user->gender_id);
         });
     }
 
@@ -224,17 +301,87 @@ class DashboardTest extends DuskTestCase
      * @group notification
      * @group success
      */
-    public function successful_update_displays_success_flash() {
+    public function successful_name_update_displays_success_flash() {
 
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Details')
                 ->type('name', 'New User Name')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-success', 'Details successfully updated!');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group flash
+     * @group notification
+     * @group success
+     */
+    public function successful_nickname_update_displays_success_flash() {
+
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->type('nickname', 'New Nick Name')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-success', 'Details successfully updated!');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group flash
+     * @group notification
+     * @group success
+     */
+    public function successful_email_update_displays_success_flash() {
+
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->type('email', 'new@email.com')
+                ->press('Update Details')
+                ->assertSeeIn('div.alert-success', 'Details successfully updated!');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group form
+     * @group flash
+     * @group notification
+     * @group success
+     */
+    public function successful_gender_update_displays_success_flash() {
+
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->select('gender_id', '3')
                 ->press('Update Details')
                 ->assertSeeIn('div.alert-success', 'Details successfully updated!');
         });
@@ -254,9 +401,7 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Details')
@@ -280,9 +425,7 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Details')
@@ -306,9 +449,7 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Details')
@@ -332,9 +473,7 @@ class DashboardTest extends DuskTestCase
 
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Details')
@@ -358,16 +497,14 @@ class DashboardTest extends DuskTestCase
         
         $this->browse(function($browser) {
 
-            $user = User::find(1);
-
             $updateData = [
                 'name'      => 'Jack Jones',
                 'nickname'  => 'Jackie',
                 'email'     => 'jack@email.com',
-                'genderId'  => 3
+                'gender_id' => 3
             ];
 
-            $browser->loginAs($user)
+            $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Your Details')
@@ -375,13 +512,13 @@ class DashboardTest extends DuskTestCase
                 ->type('name', $updateData['name'])
                 ->type('nickname', $updateData['nickname'])
                 ->type('email', $updateData['email'])
-                ->select('genderId', $updateData['genderId'])
+                ->select('gender_id', $updateData['gender_id'])
                 ->press('Update Details')
                 ->on(new Dashboard)
                 ->assertInputValue('name', $updateData['name'])
                 ->assertInputValue('nickname', $updateData['nickname'])
                 ->assertInputValue('email', $updateData['email'])
-                ->assertSelected('#genderId', $updateData['genderId']);
+                ->assertSelected('#gender_id', $updateData['gender_id']);
         });
     }
 

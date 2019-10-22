@@ -296,7 +296,7 @@ class RegisterTest extends DuskTestCase
                 ->assertInputValue('name', $this->user_data['name'])
                 ->assertInputValue('nickname', $this->user_data['nickname'])
                 ->assertInputValue('email', $this->user_data['email'])
-                ->assertSelected('#genderId', $this->user_data['gender_id']);
+                ->assertSelected('#gender_id', $this->user_data['gender_id']);
         });
     }
 
@@ -308,8 +308,6 @@ class RegisterTest extends DuskTestCase
      * @group success
      * @group redirect
      * @group flash
-     * 
-     * @group new
      */
     public function successful_register_redirects_to_dashboard_displaying_success_flash() {
             

@@ -33,8 +33,8 @@
         @enderror
     </div>
     <div class="form-group">
-        <label for="gender" class="gender">Gender</label>
-        <select class="form-control" id="genderId" name="genderId">
+        <label for="gender_id" class="gender_id">Gender</label>
+        <select class="form-control" id="gender_id" name="gender_id">
             <option>Please Select</option>
             <option value="1" @if ($user->gender_id === 1) selected="selected" @endif>Female</option>
             <option value="2" @if ($user->gender_id === 2) selected="selected" @endif>Male</option>
