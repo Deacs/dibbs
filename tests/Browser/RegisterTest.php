@@ -122,8 +122,6 @@ class RegisterTest extends DuskTestCase
      * @group form
      * @group notification
      * @group error
-     * 
-     * @group broken
      */
     public function unsuccessful_register_due_to_missing_email_displays_correct_inline_error_message() {
 
@@ -149,8 +147,6 @@ class RegisterTest extends DuskTestCase
      * @group form
      * @group notification
      * @group error
-     * 
-     * @group broken
      */
     public function unsuccessful_register_due_to_taken_email_displays_correct_inline_error_message() {
         
@@ -255,7 +251,6 @@ class RegisterTest extends DuskTestCase
      * @test
      * 
      * @group register
-     * @group notification
      * @group form
      * @group notification
      * @group error
@@ -274,6 +269,35 @@ class RegisterTest extends DuskTestCase
                 ->press('Register')
                 ->on(new Register)
                 ->assertSeeIn('span.invalid-feedback', 'The password confirmation does not match.');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group register
+     * @group form
+     * @group successs
+     * @group redirect
+     * 
+     * @group new
+     */
+    public function successful_register_redirects_to_dashboard_displaying_correct_details() {
+        $this->browse(function($browser) {
+            $browser->visit('register')
+                ->on(new Register)
+                ->type('name', $this->user_data['name'])
+                ->type('nickname', $this->user_data['nickname'])
+                ->type('email', $this->user_data['email'])
+                ->select('gender_id', $this->user_data['gender_id'])
+                ->type('password', $this->user_data['password'])
+                ->type('password_confirmation', $this->user_data['password'])
+                ->press('Register')
+                ->on(new Dashboard)
+                ->assertInputValue('name', $this->user_data['name'])
+                ->assertInputValue('nickname', $this->user_data['nickname'])
+                ->assertInputValue('email', $this->user_data['email'])
+                ->assertSelected('#genderId', $this->user_data['gender_id']);
         });
     }
 }
