@@ -61,11 +61,8 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
-     * @group flash
      * @group notification
      * @group error
-     * 
-     * @group new
      */
     public function unsuccessful_register_due_to_missing_fullname_displays_correct_inline_error_message() {
 
@@ -74,6 +71,34 @@ class RegisterTest extends DuskTestCase
                 ->on(new Register)
                 ->type('name', '')
                 ->type('nickname', $this->user_data['nickname'])
+                ->type('email', $this->user_data['email'])
+                ->select('gender_id', $this->user_data['gender_id'])
+                ->type('password', $this->user_data['password'])
+                ->type('password_confirmation', $this->user_data['password'])
+                ->press('Register')
+                ->on(new Register)
+                ->assertSeeIn('span.invalid-feedback', 'The name field is required.');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group register
+     * @group notification
+     * @group form
+     * @group notification
+     * @group error
+     * 
+     * @group new
+     */
+    public function unsuccessful_register_due_to_missing_nickname_displays_correct_inline_error_message() {
+
+        $this->browse(function($browser) {
+            $browser->visit('register')
+                ->on(new Register)
+                ->type('name', $this->user_data['name'])
+                ->type('nickname', '')
                 ->type('email', $this->user_data['email'])
                 ->select('gender_id', $this->user_data['gender_id'])
                 ->type('password', $this->user_data['password'])

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Avatar;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -69,11 +70,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
+            'nickname' => $data['nickname'],
             'email' => $data['email'],
             'gender_id' => $data['gender_id'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $avatar = Avatar::create([
+            'user_id' => $user->id,
+        ]);
+
+        return $user;
     }
 }
