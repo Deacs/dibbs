@@ -279,10 +279,9 @@ class RegisterTest extends DuskTestCase
      * @group form
      * @group successs
      * @group redirect
-     * 
-     * @group new
      */
     public function successful_register_redirects_to_dashboard_displaying_correct_details() {
+        
         $this->browse(function($browser) {
             $browser->visit('register')
                 ->on(new Register)
@@ -298,6 +297,34 @@ class RegisterTest extends DuskTestCase
                 ->assertInputValue('nickname', $this->user_data['nickname'])
                 ->assertInputValue('email', $this->user_data['email'])
                 ->assertSelected('#genderId', $this->user_data['gender_id']);
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group register
+     * @group form
+     * @group success
+     * @group redirect
+     * @group flash
+     * 
+     * @group new
+     */
+    public function successful_register_redirects_to_dashboard_displaying_success_flash() {
+            
+        $this->browse(function($browser) {
+            $browser->visit('register')
+                ->on(new Register)
+                ->type('name', $this->user_data['name'])
+                ->type('nickname', $this->user_data['nickname'])
+                ->type('email', $this->user_data['email'])
+                ->select('gender_id', $this->user_data['gender_id'])
+                ->type('password', $this->user_data['password'])
+                ->type('password_confirmation', $this->user_data['password'])
+                ->press('Register')
+                ->on(new Dashboard)
+                ->assertSeeIn('div.alert-success', 'Welcome, '.$this->user_data['nickname'].'. Your account has been successfully created!');
         });
     }
 }

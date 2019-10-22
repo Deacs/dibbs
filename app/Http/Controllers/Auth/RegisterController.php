@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Session;
 use App\User;
 use App\Avatar;
 use Illuminate\Validation\Rule;
@@ -71,8 +72,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data) {
         $user = User::create([
             'name'      => $data['name'],
             'nickname'  => $data['nickname'],
@@ -84,6 +84,8 @@ class RegisterController extends Controller
         $avatar = Avatar::create([
             'user_id' => $user->id,
         ]);
+
+        Session::flash('success','Welcome, '.$data['nickname'].'. Your account has been successfully created!');
 
         return $user;
     }
