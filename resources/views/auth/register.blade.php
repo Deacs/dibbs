@@ -31,7 +31,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nickname') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nickname" type="text" class="form-control @error('name') is-invalid @enderror" name="nickname" value="{{ old('nickname') }}" autocomplete="nickname" autofocus>
+                                <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" name="nickname" value="{{ old('nickname') }}" autocomplete="nickname" autofocus>
 
                                 @error('nickname')
                                     <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                             <label for="gender_id" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
 
                             <div class="col-md-6">
-                                <select name="gender_id" id="gender_id" class="form_control"@error('gender_id') is-invalid @enderror" value="{{ old('gender_id') }}" autocomplete="gender_id" autofocus>
+                                <select id="gender_id" class="form_control @error('gender_id') is-invalid @enderror" name="gender_id" value="{{ old('gender_id') }}" autocomplete="gender_id" autofocus>
                                     <option value="">Please Select...</option>
                                     <option value="1">Female</option>
                                     <option value="2"> Male</option>
@@ -67,7 +67,7 @@
                                 </select>
 
                                 @error('gender_id')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="display: block;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

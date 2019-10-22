@@ -53,13 +53,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'nickname' => ['required', 'string', 'max:32'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'gender_id' => ['required', 'integer', Rule::in(['1', '2', '3'])],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name'      => ['required', 'string', 'max:255'],
+            'nickname'  => ['required', 'string', 'max:32'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'gender_id' => ['required', 'string', Rule::in(['1', '2', '3'])],
+            'password'  => ['required', 'string', 'min:8', 'confirmed'],
         ],
-        ['gender_id.in' => 'Please specify a gender for your account']);
+        [
+            'gender_id.required'    => 'Please specify a gender for your account',
+            'gender_id.in'          => 'Invalid gender selected',
+        ]);
     }
 
     /**
@@ -71,11 +74,11 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'name' => $data['name'],
-            'nickname' => $data['nickname'],
-            'email' => $data['email'],
+            'name'      => $data['name'],
+            'nickname'  => $data['nickname'],
+            'email'     => $data['email'],
             'gender_id' => $data['gender_id'],
-            'password' => Hash::make($data['password']),
+            'password'  => Hash::make($data['password']),
         ]);
 
         $avatar = Avatar::create([

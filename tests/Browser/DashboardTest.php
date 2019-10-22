@@ -29,6 +29,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group auth
      * @group redirect
+     * @group path
      */
     public function dashboard_request_for_anon_user_redirected_to_login()
     {
@@ -223,7 +224,7 @@ class DashboardTest extends DuskTestCase
      * @group notification
      * @group success
      */
-    public function successful_update_displays_success_alert() {
+    public function successful_update_displays_success_flash() {
 
         $this->browse(function($browser) {
 
@@ -249,7 +250,7 @@ class DashboardTest extends DuskTestCase
      * @group notification
      * @group error
      */
-    public function unsuccessful_update_due_to_missing_fullname_displays_correct_error_alert() {
+    public function unsuccessful_update_due_to_missing_fullname_displays_correct_error_flash() {
 
         $this->browse(function($browser) {
 
@@ -275,7 +276,7 @@ class DashboardTest extends DuskTestCase
      * @group notification
      * @group error
      */
-    public function unsuccessful_update_due_to_missing_nickname_displays_correct_error_alert() {
+    public function unsuccessful_update_due_to_missing_nickname_displays_correct_error_flash() {
 
         $this->browse(function($browser) {
 
@@ -301,7 +302,7 @@ class DashboardTest extends DuskTestCase
      * @group notification
      * @group error
      */
-    public function unsuccessful_update_due_to_missing_email_displays_correct_error_alert() {
+    public function unsuccessful_update_due_to_missing_email_displays_correct_error_flash() {
 
         $this->browse(function($browser) {
 
@@ -327,7 +328,7 @@ class DashboardTest extends DuskTestCase
      * @group notification
      * @group error
      */
-    public function unsuccessful_update_due_to_malformed_email_displays_correct_error_alert() {
+    public function unsuccessful_update_due_to_malformed_email_displays_correct_error_flash() {
 
         $this->browse(function($browser) {
 
