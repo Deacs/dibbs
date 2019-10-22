@@ -246,8 +246,8 @@ class DashboardTest extends DuskTestCase
                 ->clickLink('Your Details')
                 ->assertSeeIn('div#user_details > form > div.form-group > label.fullname', 'Full Name')
                 ->assertSeeIn('div#user_details > form > div.form-group > label.nickname', 'Nickname')
-                ->assertSeeIn('div#user_details > form > div.form-group label.email', 'Email address')
-                ->assertSeeIn('div#user_details > form > div.form-group label.gender_id', 'Gender');
+                ->assertSeeIn('div#user_details > form > div.form-group > label.email', 'Email address')
+                ->assertSeeIn('div#user_details > form > div.form-group > label.gender_id', 'Gender');
        });
     }
 
