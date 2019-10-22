@@ -70,7 +70,6 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
-     * @group notification
      * @group error
      */
     public function unsuccessful_register_due_to_missing_fullname_displays_correct_inline_error_message() {
@@ -95,7 +94,6 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
-     * @group notification
      * @group error
      */
     public function unsuccessful_register_due_to_missing_nickname_displays_correct_inline_error_message() {
@@ -120,7 +118,6 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
-     * @group notification
      * @group error
      */
     public function unsuccessful_register_due_to_missing_email_displays_correct_inline_error_message() {
@@ -145,7 +142,6 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
-     * @group notification
      * @group error
      */
     public function unsuccessful_register_due_to_taken_email_displays_correct_inline_error_message() {
@@ -179,7 +175,6 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
-     * @group notification
      * @group error
      */
     public function unsuccessful_register_due_to_unselected_gender_displays_correct_inline_error_message() {
@@ -204,7 +199,6 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
-     * @group notification
      * @group error
      */
     public function unsuccessful_register_due_to_missing_password_displays_correct_inline_error_message() {
@@ -228,7 +222,6 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
-     * @group notification
      * @group error
      */
     public function unsuccessful_register_due_to_password_not_matching_min_length_displays_correct_inline_error_message() {
