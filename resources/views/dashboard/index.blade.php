@@ -42,12 +42,10 @@
     </div>
 </div>
 
-
 @endsection
 
 @section('footer_script')
 <script>
-    // $('#user_details').show();
 
     var $user_detail_links  = $('ul#user_detail_panel_tabs li.nav-item a.nav-link'),
         $avatar_mgt_links   = $('a.avatar-mgr-link'),

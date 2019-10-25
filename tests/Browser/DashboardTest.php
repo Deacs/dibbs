@@ -531,8 +531,37 @@ class DashboardTest extends DuskTestCase
         });
     }
 
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     * 
+     * @group new
+     */
+    public function updating_password_form_correctly_redirects_after_submission() {
 
-// public function updating_password_form_shows_correct_validation_error_when_current_password_missing() {
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Reset Password')
+                ->type('new_password', 'updatedpassword')
+                ->type('new_password_confirm', 'updatedpassword')
+                ->press('Update Password')
+                ->assertSeeIn('div.alert-danger', 'You must enter your current password');
+        });
+    }
+
+// public function updating_password_form_shows_correct_validation_error_when_current_password_missing() {}
 
     /**
      * @test
