@@ -18,7 +18,7 @@ Route::get('/', 'MainController@index');
 
 Route::get('dashboard', 'DashboardController@index')->name('dashboard')->middleware('auth');
 
-Route::post('user/update/password', 'UserController@updatePassword')->name('update_user_password')->middleware('auth');
+Route::post('user/password/update', 'Auth\ResetPasswordController@update')->name('update_user_password')->middleware('auth');
 
 Route::post('user/update', 'UserController@update')->name('update_user')->middleware('auth');
 

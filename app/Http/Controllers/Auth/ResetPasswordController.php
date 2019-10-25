@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use View;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
@@ -34,6 +35,20 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        // $this->middleware('guest');
+    }
+
+    /**
+     * Update the current user's password
+     * 
+     * @param  array  $data
+     * @return \App\User
+     */
+    public function update() {
+        $user = \Auth::user();
+
+        return view('dashboard.index')
+            ->with('user', $user)
+            ->with('active_panel', 'update_password');
     }
 }

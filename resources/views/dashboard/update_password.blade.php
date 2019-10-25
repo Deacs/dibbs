@@ -1,18 +1,21 @@
 <h4 class="update_password">Update your password</h4>
 
-<form action="user/update/password">
+<form action="user/password/update" method="POST">
     {{ csrf_field() }}
     <div class="form-group">
-        <label for="exampleInputPassword1"> Current Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <label for="password">{{ __('New Password') }}</label>
+        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+        @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1"> New Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <label for="new_password_confirm">{{ __('Confirm New Password') }}</label>
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
     </div>
-        <div class="form-group">
-        <label for="exampleInputPassword1"> Confirm New Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary">Update Password</button>
+
+    <button type="submit" class="btn btn-primary">{{ __('Update Password') }}</button>
 </form>

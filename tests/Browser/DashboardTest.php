@@ -258,7 +258,7 @@ class DashboardTest extends DuskTestCase
      * @group user
      * @group form
      */
-    public function gender_iselct_in_user_details_form_has_correct_options() {
+    public function gender_select_in_user_details_form_has_correct_options() {
 
         $this->browse(function($browser) {
             $browser->loginAs(User::find(1))
@@ -297,6 +297,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group success
@@ -321,6 +322,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group success
@@ -345,6 +347,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group success
@@ -369,6 +372,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group success
@@ -393,6 +397,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group error
@@ -417,6 +422,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group error
@@ -441,6 +447,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group error
@@ -465,6 +472,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group error
@@ -489,6 +497,7 @@ class DashboardTest extends DuskTestCase
      * @group dashboard
      * @group user
      * @group form
+     * @group validation
      * @group flash
      * @group notification
      * @group success
@@ -519,6 +528,32 @@ class DashboardTest extends DuskTestCase
                 ->assertInputValue('nickname', $updateData['nickname'])
                 ->assertInputValue('email', $updateData['email'])
                 ->assertSelected('#gender_id', $updateData['gender_id']);
+        });
+    }
+
+
+// public function updating_password_form_shows_correct_validation_error_when_current_password_missing() {
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_fails_when_incorrect_current_password_entered() {
+
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard);
         });
     }
 

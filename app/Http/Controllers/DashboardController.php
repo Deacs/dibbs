@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use View;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,6 +14,8 @@ class DashboardController extends Controller
      */
     public function index() {
         $user = \Auth::user();
-        return view('dashboard.index')->with('user', $user);
+        return view('dashboard.index')
+                ->with('user', $user)
+                ->with('active_panel', 'user_details');
     }
 }
