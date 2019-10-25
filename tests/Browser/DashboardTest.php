@@ -121,7 +121,7 @@ class DashboardTest extends DuskTestCase
                     ->visit('/dashboard')
                     ->on(new Dashboard)
                     ->assertSee('Your Details')
-                    ->assertSee('Reset Password')
+                    ->assertSee('Update Password')
                     ->assertSee('Your Calendar');
         });
     }
@@ -154,7 +154,7 @@ class DashboardTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit('/dashboard')
                     ->on(new Dashboard)
-                    ->assertDontSeeIn('li.nav-item > a.active', 'Reset Password')
+                    ->assertDontSeeIn('li.nav-item > a.active', 'Update Password')
                     ->assertDontSeeIn('li.nav-item > a.active', 'Your Calendar');
         });
     }
@@ -206,7 +206,7 @@ class DashboardTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
-                ->clickLink('Reset Password')
+                ->clickLink('Update Password')
                 ->assertVisible('div#update_password');
         });
     }
@@ -543,25 +543,22 @@ class DashboardTest extends DuskTestCase
      * @group flash
      * @group notification
      * @group error
-     * 
-     * @group new
      */
-    public function updating_password_form_correctly_redirects_after_submission() {
+    public function updating_password_form_shows_correct_validation_error_when_new_password_is_too_short() {
 
         $this->browse(function($browser) {
 
             $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->on(new Dashboard)
-                ->clickLink('Reset Password')
-                ->type('new_password', 'updatedpassword')
-                ->type('new_password_confirm', 'updatedpassword')
+                ->clickLink('Update Password')
+                ->type('password', '2short')
+                ->type('password_confirmation', '2short')
                 ->press('Update Password')
-                ->assertSeeIn('div.alert-danger', 'You must enter your current password');
+                ->on(new Dashboard)
+                ->assertSeeIn('span.invalid-feedback', 'The password must be at least 8 characters');
         });
     }
-
-// public function updating_password_form_shows_correct_validation_error_when_current_password_missing() {}
 
     /**
      * @test
@@ -576,13 +573,295 @@ class DashboardTest extends DuskTestCase
      * @group notification
      * @group error
      */
-    public function updating_password_fails_when_incorrect_current_password_entered() {
+    public function updating_password_form_shows_correct_error_flash_when_new_password_is_too_short() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', '2short')
+                ->type('password_confirmation', '2short')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->assertSeeIn('div.alert-danger', 'Sorry, '.$user->nickname.'. Please fix the error below!');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_form_shows_correct_panel_when_new_password_is_too_short() {
+        
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', '2short')
+                ->type('password_confirmation', '2short')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->assertVisible('#update_password');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_form_shows_correct_active_tab_when_new_password_is_too_short() {
+        
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', '2short')
+                ->type('password_confirmation', '2short')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->assertSeeIn('li.nav-item > a.active', 'Update Password');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_form_shows_correct_validation_error_when_new_password_confirmation_does_not_match() {
 
         $this->browse(function($browser) {
 
             $browser->loginAs(User::find(1))
                 ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', 'newpassword')
+                ->type('password_confirmation', 'doesnotmatch')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->assertSeeIn('span.invalid-feedback', 'The password confirmation does not match.');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_form_shows_correct_error_flash_when_new_password_confirmation_does_not_match() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', 'newpassword')
+                ->type('password_confirmation', 'doesnotmatch')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->assertSeeIn('div.alert-danger', 'Sorry, '.$user->nickname.'. Please fix the error below!');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_form_shows_correct_panel_when_new_password_confirmation_does_not_match() {
+        
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', '2short')
+                ->type('password_confirmation', '2short')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->assertVisible('#update_password');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_form_shows_correct_active_tab_when_new_password_confirmation_does_not_match() {
+        
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', '2short')
+                ->type('password_confirmation', '2short')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->assertSeeIn('li.nav-item > a.active', 'Update Password');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_form_correctly_redirects_after_successful_update() {
+        
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', 'newpassword')
+                ->type('password_confirmation', 'newpassword')
+                ->press('Update Password')
                 ->on(new Dashboard);
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function updating_password_form_correctly_displays_success_flash() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', 'newpassword')
+                ->type('password_confirmation', 'newpassword')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->assertSeeIn('div.alert-success', 'Congratulations, '.$user->nickname.'. Your password has been successfully updated!');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group user
+     * @group password
+     * @group form
+     * @group password
+     * @group validation
+     * @group flash
+     * @group notification
+     * @group error
+     */
+    public function user_can_succesfully_login_after_password_update() {
+
+        $this->browse(function($browser) {
+
+            $user = User::find(1);
+
+            $browser->loginAs($user)
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->type('password', 'newpassword')
+                ->type('password_confirmation', 'newpassword')
+                ->press('Update Password')
+                ->on(new Dashboard)
+                ->clickLink('Logout')
+                ->clickLink('Login')
+                ->on(new Login)
+                ->type('email', $user->email)
+                ->type('password', 'newpassword')
+                ->press('Login')
+                ->waitFortext('Welcome back')
+                ->assertSeeIn('div.alert-success', 'Welcome back '.$user->nickname)
+                ->logout();
         });
     }
 

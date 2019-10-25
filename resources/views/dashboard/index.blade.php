@@ -17,7 +17,7 @@
                     <a class="nav-link" data-panel="user_details" href="#">Your Details</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-panel="update_password" href="#">Reset Password</a>
+                    <a class="nav-link" data-panel="update_password" href="#">Update Password</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-panel="calendar" href="#">Your Calendar</a>
