@@ -26,7 +26,7 @@ class RegisterTest extends DuskTestCase
         'name'      => 'Barry Chuckle',
         'nickname'  => 'Baz',
         'email'     => 'baz@email.com',
-        'password'  => 'bazza_pass',
+        'password'  => 'tomeetoyou',
         'gender_id' => 3,
     ];
     
@@ -70,6 +70,7 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
+     * @group validation
      * @group error
      */
     public function unsuccessful_register_due_to_missing_fullname_displays_correct_inline_error_message() {
@@ -94,6 +95,7 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
+     * @group validation
      * @group error
      */
     public function unsuccessful_register_due_to_missing_nickname_displays_correct_inline_error_message() {
@@ -118,6 +120,7 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
+     * @group validation
      * @group error
      */
     public function unsuccessful_register_due_to_missing_email_displays_correct_inline_error_message() {
@@ -142,6 +145,7 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
+     * @group validation
      * @group error
      */
     public function unsuccessful_register_due_to_taken_email_displays_correct_inline_error_message() {
@@ -152,7 +156,7 @@ class RegisterTest extends DuskTestCase
                 'email' => 'duplicate@email.com'
             ]);
             factory(Avatar::class)->create([
-                'user_id' => 1
+                'user_id' => $user->id
             ]);
 
             $browser->visit('register')
@@ -175,6 +179,7 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
+     * @group validation
      * @group error
      */
     public function unsuccessful_register_due_to_unselected_gender_displays_correct_inline_error_message() {
@@ -199,6 +204,7 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
+     * @group validation
      * @group error
      */
     public function unsuccessful_register_due_to_missing_password_displays_correct_inline_error_message() {
@@ -222,6 +228,7 @@ class RegisterTest extends DuskTestCase
      * @group register
      * @group notification
      * @group form
+     * @group validation
      * @group error
      */
     public function unsuccessful_register_due_to_password_not_matching_min_length_displays_correct_inline_error_message() {
@@ -245,6 +252,7 @@ class RegisterTest extends DuskTestCase
      * 
      * @group register
      * @group form
+     * @group validation
      * @group notification
      * @group error
      */
@@ -298,6 +306,7 @@ class RegisterTest extends DuskTestCase
      * 
      * @group register
      * @group form
+     * @group validation
      * @group success
      * @group redirect
      * @group flash

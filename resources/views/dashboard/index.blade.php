@@ -13,14 +13,14 @@
         </div>
         <div class="col-9">
             <ul class="nav nav-tabs" id="user_detail_panel_tabs">
-                <li class="nav-item">
-                    <a class="nav-link" data-panel="user_details" href="#">Your Details</a>
+                <li class="nav-item" id="user_details_tab">
+                    <a class="nav-link inactive" data-panel="user_details" href="#">Your Details</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-panel="update_password" href="#">Update Password</a>
+                <li class="nav-item" id="update_password_tab">
+                    <a class="nav-link inactive" data-panel="update_password" href="#">Update Password</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-panel="calendar" href="#">Your Calendar</a>
+                <li class="nav-item" id="your_calendar_tab">
+                    <a class="nav-link inactive" data-panel="calendar" href="#">Your Calendar</a>
                 </li>
             </ul>
             <div id="user_details_panels">
@@ -34,8 +34,8 @@
                 <div class="user_detail_panel" id="calendar" style="display:none;">
                     @include('dashboard.calendar')
                 </div>
-                <div class="user_detail_panel" id="update_avatar" style="display:none;">
-                    @include('avatar.edit')
+                <div class="user_detail_panel" id="manage_avatar" style="display:none;">
+                    @include('avatar.manage')
                 </div>
             </div>
         </div>
@@ -57,11 +57,10 @@
 
         if ($active_panel_field.val() == $(this).attr('id')) {
             $(this).show();
-            // activate the correct tab
             $("ul#user_detail_panel_tabs")
                 .find("[data-panel='"+$(this).attr('id')+"']")
-                .addClass('active')
-                .siblings().removeClass('active');
+                .addClass('active').removeClass('inactive')
+                .siblings().removeClass('active').addClass('inactive');
         } else {
             $(this).hide();
         }
@@ -76,10 +75,10 @@
 
             $active_panel_field.val($panel);
 
-            $tab.addClass('active');
+            $tab.addClass('active').removeClass('inactive');
 
             $user_detail_tabs.not(this).each(function() {
-                $(this).removeClass('active');
+                $(this).removeClass('active').addClass('inactive');
             });
 
             $user_detail_panels.each(function() {

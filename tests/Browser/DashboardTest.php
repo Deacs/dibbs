@@ -103,11 +103,10 @@ class DashboardTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                 ->visit('dashboard')
                 ->clickLink('custom avatar')
-                ->assertSeeIn('div#update_avatar > h4', 'Edit your avatar');
+                ->assertSeeIn('div#manage_avatar > h4', 'Manage your Avatar');
         });
     }
 
-    
     /**
      * @test
      * 
@@ -138,7 +137,7 @@ class DashboardTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit('/dashboard')
                     ->on(new Dashboard)
-                    ->assertSeeIn('li.nav-item > a.active', 'Your Details');
+                    ->assertSeeIn('#user_details_tab > a.active', 'Your Details');
         });
     }
 
@@ -154,8 +153,8 @@ class DashboardTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit('/dashboard')
                     ->on(new Dashboard)
-                    ->assertDontSeeIn('li.nav-item > a.active', 'Update Password')
-                    ->assertDontSeeIn('li.nav-item > a.active', 'Your Calendar');
+                    ->assertSeeIn('#update_password_tab > a.inactive', 'Update Password')
+                    ->assertSeeIn('#your_calendar_tab > a.inactive', 'Your Calendar');
         });
     }
 
@@ -778,7 +777,7 @@ class DashboardTest extends DuskTestCase
      * @group validation
      * @group flash
      * @group notification
-     * @group error
+     * @group success
      */
     public function updating_password_form_correctly_redirects_after_successful_update() {
         
@@ -806,7 +805,7 @@ class DashboardTest extends DuskTestCase
      * @group validation
      * @group flash
      * @group notification
-     * @group error
+     * @group success
      */
     public function updating_password_form_correctly_displays_success_flash() {
 
@@ -837,7 +836,9 @@ class DashboardTest extends DuskTestCase
      * @group validation
      * @group flash
      * @group notification
-     * @group error
+     * @group success
+     * @group login
+     * @group auth
      */
     public function user_can_succesfully_login_after_password_update() {
 

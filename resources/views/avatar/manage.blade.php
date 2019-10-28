@@ -1,4 +1,4 @@
-<h4>Edit your avatar</h4>
+<h4>Manage your Avatar</h4>
 
 @if ($user->avatar_type == 'custom')
     You are using a custom avatar
@@ -10,6 +10,8 @@
         that you have specifically selected: 
     @endif
     <img src="{{ $user->avatar->getPath(200) }}">
+    <img src="{{ $user->avatar->getPath(200) }}">
+    
 @endif
 
 <hr>
