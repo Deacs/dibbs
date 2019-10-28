@@ -27,6 +27,7 @@ class AvatarTest extends DuskTestCase
      * @test
      * 
      * @group avatar
+     * @group link
      * @group layout
      */
     public function clicking_manage_avatar_link_displays_correct_tab() {
@@ -46,6 +47,7 @@ class AvatarTest extends DuskTestCase
      * 
      * @group avatar
      * @group nav
+     * @group link
      * @group layout
      */
     public function opening_manage_avatar_panel_correctly_deactivates_other_dashboard_navigation_tabs() {
@@ -61,4 +63,5 @@ class AvatarTest extends DuskTestCase
                 ->assertSeeIn('#your_calendar_tab > a.inactive', 'Your Calendar');
         });
     }
+
 }

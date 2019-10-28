@@ -10,8 +10,15 @@
         that you have specifically selected: 
     @endif
     <img src="{{ $user->avatar->getPath(200) }}">
-    <img src="{{ $user->avatar->getPath(200) }}">
     
+@endif
+
+<hr>
+
+@if ($user->avatar_type == 'custom')
+        <a href="https://en.gravatar.com/">Would you rather use Gravatar?</a>
+@else
+    Would you rather use a <a href="#" class="avatar-mgr-link" data-panel="manage_avatar">custom avatar</a>, or <a href="https://en.gravatar.com/">your own Gravatar image</a>?
 @endif
 
 <hr>

@@ -43,74 +43,6 @@ class DashboardTest extends DuskTestCase
      * @test
      * 
      * @group dashboard
-     * @group link
-     * @group avatar
-     */
-    public function user_with_automatically_generated_gravatar_sees_link_to_gravatar_site() {
-
-        $this->browse(function($browser) {
-            $browser->loginAs(User::find(1))
-                ->visit('dashboard')
-                ->assertSeeLink('your own Gravatar image');
-        });
-    }
-
-    /**
-     * @test
-     * 
-     * @group dashboard
-     * @group link
-     * @group avatar
-     */
-    public function user_with_automatically_generated_gravatar_sees_link_to_create_custom_avatar() {
-
-        $this->browse(function($browser) {
-            $browser->loginAs(User::find(1))
-                ->visit('dashboard')
-                ->assertSeeLink('custom avatar');
-        });
-    }
-
-    /**
-     * @test
-     * 
-     * @group dashboard
-     * @group avatar
-     * @group link
-     * @group url
-     */
-    public function gravatar_site_link_opens_correct_url() {
-
-        $this->browse(function($browser) {
-            $browser->loginAs(User::find(1))
-                ->visit('dashboard')
-                ->clickLink('your own Gravatar image')
-                ->assertUrlIs('https://en.gravatar.com/');
-        });
-    }
-
-    /**
-     * @test
-     * 
-     * @group dashboard
-     * @group avatar
-     * @group link
-     * @group form
-     */
-    public function custom_avatar_link_displays_correct_form() {
-
-        $this->browse(function($browser) {
-            $browser->loginAs(User::find(1))
-                ->visit('dashboard')
-                ->clickLink('custom avatar')
-                ->assertSeeIn('div#manage_avatar > h4', 'Manage your Avatar');
-        });
-    }
-
-    /**
-     * @test
-     * 
-     * @group dashboard
      * @group nav
      */
     public function dashboard_displays_correct_tabs() {
@@ -225,6 +157,69 @@ class DashboardTest extends DuskTestCase
                 ->on(new Dashboard)
                 ->clickLink('Your Calendar')
                 ->assertVisible('div#calendar');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group nav
+     * @group display_behaviour
+     */
+    public function clicking_your_details_tab_correctly_sets_active_state_while_deactivating_others() {
+
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Details')
+                ->assertSeeIn('#user_details_tab > a.active', 'Your Details')
+                ->assertSeeIn('#update_password_tab > a.inactive', 'Update Password')
+                ->assertSeeIn('#your_calendar_tab > a.inactive', 'Your Calendar');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group nav
+     * @group display_behaviour
+     */
+    public function clicking_update_password_tab_correctly_sets_active_state_while_deactivating_others() {
+
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Update Password')
+                ->assertSeeIn('#user_details_tab > a.inactive', 'Your Details')
+                ->assertSeeIn('#update_password_tab > a.active', 'Update Password')
+                ->assertSeeIn('#your_calendar_tab > a.inactive', 'Your Calendar');
+        });
+    }
+
+    /**
+     * @test
+     * 
+     * @group dashboard
+     * @group nav
+     * @group display_behaviour
+     */
+    public function clicking_your_calendar_tab_correctly_sets_active_state_while_deactivating_others() {
+
+        $this->browse(function($browser) {
+
+            $browser->loginAs(User::find(1))
+                ->visit('dashboard')
+                ->on(new Dashboard)
+                ->clickLink('Your Calendar')
+                ->assertSeeIn('#user_details_tab > a.inactive', 'Your Details')
+                ->assertSeeIn('#update_password_tab > a.inactive', 'Update Password')
+                ->assertSeeIn('#your_calendar_tab > a.active', 'Your Calendar');
         });
     }
 
@@ -669,8 +664,8 @@ class DashboardTest extends DuskTestCase
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Update Password')
-                ->type('password', 'newpassword')
-                ->type('password_confirmation', 'doesnotmatch')
+                ->type('password', 'password_one')
+                ->type('password_confirmation', 'password_two')
                 ->press('Update Password')
                 ->on(new Dashboard)
                 ->assertSeeIn('span.invalid-feedback', 'The password confirmation does not match.');
@@ -700,8 +695,8 @@ class DashboardTest extends DuskTestCase
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Update Password')
-                ->type('password', 'newpassword')
-                ->type('password_confirmation', 'doesnotmatch')
+                ->type('password', 'password_one')
+                ->type('password_confirmation', 'password_two')
                 ->press('Update Password')
                 ->on(new Dashboard)
                 ->assertSeeIn('div.alert-danger', 'Sorry, '.$user->nickname.'. Please fix the error below!');
@@ -729,8 +724,8 @@ class DashboardTest extends DuskTestCase
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Update Password')
-                ->type('password', '2short')
-                ->type('password_confirmation', '2short')
+                ->type('password', 'password_one')
+                ->type('password_confirmation', 'password_two')
                 ->press('Update Password')
                 ->on(new Dashboard)
                 ->assertVisible('#update_password');
@@ -758,8 +753,8 @@ class DashboardTest extends DuskTestCase
                 ->visit('dashboard')
                 ->on(new Dashboard)
                 ->clickLink('Update Password')
-                ->type('password', '2short')
-                ->type('password_confirmation', '2short')
+                ->type('password', 'password_one')
+                ->type('password_confirmation', 'password_two')
                 ->press('Update Password')
                 ->on(new Dashboard)
                 ->assertSeeIn('li.nav-item > a.active', 'Update Password');
