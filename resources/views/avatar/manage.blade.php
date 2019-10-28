@@ -1,5 +1,10 @@
 <h4>Manage your Avatar</h4>
 
+<h5 id="current_setting">Current setting:  @if ($user->avatar->type == 'custom') Custom @else Gravatar @endif </h5>
+<a href="https://en.gravatar.com/" id="visit_gravatar">Update via the Gravatar website</a>
+
+<hr>
+
 @if ($user->avatar_type == 'custom')
     You are using a custom avatar
 @else
